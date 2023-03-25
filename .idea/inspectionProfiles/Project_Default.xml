@@ -1,0 +1,33 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="10">
+            <item index="0" class="java.lang.String" itemvalue="Werkzeug" />
+            <item index="1" class="java.lang.String" itemvalue="MarkupSafe" />
+            <item index="2" class="java.lang.String" itemvalue="Flask" />
+            <item index="3" class="java.lang.String" itemvalue="greenlet" />
+            <item index="4" class="java.lang.String" itemvalue="beautifulsoup4" />
+            <item index="5" class="java.lang.String" itemvalue="bs4" />
+            <item index="6" class="java.lang.String" itemvalue="SQLAlchemy" />
+            <item index="7" class="java.lang.String" itemvalue="marshmallow" />
+            <item index="8" class="java.lang.String" itemvalue="soupsieve" />
+            <item index="9" class="java.lang.String" itemvalue="psycopg2" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="demostration_solution.dao.model.director.setup_db" />
+          <option value="demostration_solution.dao.model.movie.setup_db" />
+          <option value="my_project_part_1.list_view.views.Store" />
+          <option value="ads.models.check_is_published" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
