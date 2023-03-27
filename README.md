@@ -1,10 +1,24 @@
-TODOLIST
+Проект "TODOLIST"
 
-Python 3.10
-Django 4.0.1
-asgiref 3.6.0
-django-environ 0.10.0
-sqlparse 0.4.3
+Install requirements:
 
+pip install -r requirements.txt
 
-#как запустить (установить зависимости, заполнить .env + какими значениями, накатить миграции, запустить проект)
+Create .env file with constants:
+
+POSTGRES_USER
+POSTGRES_PASSWORD
+POSTGRES_DB
+DB_HOST
+DB_PORT
+DEBUG
+SECRET_KEY
+
+Create migrations:
+python manage.py makemigrations
+
+Apply migrations:
+python manage.py migrate
+
+Run server:
+python manage.py runserver
