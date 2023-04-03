@@ -9,11 +9,11 @@ jobs:
       POSTGRES_USER: ${{secrets.POSTGRES_USER}}
 
     steps:
-      - name: clone git repo
+      - name: clone code
         uses: actions/checkout@v2
-      - name: build api image
+      - name: docker build
         run: docker build -t dsvistelnik/todolist:$GITHUB_REF_NAME-$GITHUB_RUN_ID .
       - name: docker login
         run: echo ${{secrets.DOCKER_TOKEN}} | docker login -u ${{secrets.DOCKER_USERNAME}} --password-stdin
-      - name: docker push images
-        run: docker push dsvistelnik/todolist:$GITHUB_REF_NAME-$GITHUB_RUN_ID .
+      - name: docker push
+        run: docker push dsvistelnik/todolist:$GITHUB_REF_NAME-$GITHUB_RUN_ID
