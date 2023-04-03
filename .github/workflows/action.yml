@@ -16,4 +16,4 @@ jobs:
       - name: docker login
         run: echo ${{secrets.DOCKER_TOKEN}} | docker login -u ${{secrets.DOCKER_USERNAME}} --password-stdin
       - name: docker push images
-        run: docker push ${{secrets.DOCKER_USERNAME}}/diploma:api-$GITHUB_RUN_ID
+        run: docker push dsvistelnik/todolist:$GITHUB_REF_NAME-$GITHUB_RUN_ID .
