@@ -1,6 +1,30 @@
 version: '3.8'
 
 services:
+  front:
+    build:
+      context: frontend/.
+    depends_on:
+      - api
+    ports:
+      - '80:80'
+
+  api:
+    build:
+      context: .
+    expose:
+      - 8000
+    depends_on:
+      migrations:
+        condition: service_completed_successfully
+
+  migrations:
+    build:
+      context: .
+    command: flask db upgrade
+    depends_on:
+      db:
+        condition: service_healthy
 
   db:
     image: postgres:14.1-alpine
