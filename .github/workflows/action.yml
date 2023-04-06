@@ -1,4 +1,4 @@
-name: todolist
+name: Build
 on: [push]
 jobs:
   build:
@@ -16,4 +16,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/todolist:$GITHUB_REF_NAME-$GITHUB_RUN_ID
+          tags: dsvistelnik/todolist:latest
