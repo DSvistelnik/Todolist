@@ -52,7 +52,7 @@ jobs:
           username: ${{ secrets.NAME_SKYPRO }}
           password: ${{ secrets.SKYPRO_PASSWORD }}
           script: |
-            cd todolist_app
+            cd todolist_app/todolist
             echo ${{ secrets.SKYPRO_PASSWORD }} | sudo -S docker-compose up -d
 
 
