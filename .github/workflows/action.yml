@@ -21,3 +21,30 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: dsvistelnik/todolist:latest
+          
+          
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    env:
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: postgres
+    steps:
+      - name: clone code
+        uses: actions/checkout@v2
+      - name: render docker-compose
+        run: |
+          mkdir todolist
+          cat docker-compose-ci.yaml | envsubst > todolist/docker-compose.yaml
+      - name: copy docker-compose.yaml to server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.NAME_SKYPRO }}
+          password: ${{ secrets.SKYPRO_PASSWORD }}
+          source: "todolist/docker-compose.yaml"
+          target: todolist_app
+
+
+      
