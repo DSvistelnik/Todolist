@@ -11,11 +11,11 @@ jobs:
       - name: clone git repo
         uses: actions/checkout@v2
       - name: build api image
-        run: docker build -t ${{secrets.DOCKER_USERNAME}}/todolist:api-$GITHUB_RUN_ID .
+        run: docker build -t ${{secrets.DOCKER_USERNAME}}/todolist:$GITHUB_RUN_ID .
       - name: docker login
         run: echo ${{secrets.DOCKERHUB_TOKEN}} | docker login -u ${{secrets.DOCKERHUB_USERNAME}} --password-stdin
       - name: docker push images
-        run: docker push ${{secrets.DOCKERHUB_USERNAME}}/todolist:api-$GITHUB_RUN_ID
+        run: docker push ${{secrets.DOCKERHUB_USERNAME}}/todolist:$GITHUB_RUN_ID
 
 
   deploy:
