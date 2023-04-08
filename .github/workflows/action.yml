@@ -22,7 +22,6 @@ jobs:
           push: true
           tags: dsvistelnik/todolist:latest
 
-
   deploy:
     runs-on: ubuntu-latest
     needs: build
@@ -45,7 +44,6 @@ jobs:
           source: "todolist/docker-compose.yaml"
           target: todolist
           strip_components: 1
-
       - name: run docker-compose
         uses: appleboy/ssh-action@master
         with:
