@@ -27,9 +27,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     env:
-      DB_USER: postgres
-      DB_PASSWORD: postgres
-      DB_NAME: postgres
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASSWORD: ${{ secrets.DB_USER }}
+      DB_NAME: ${{ secrets.DB_USER }}
     steps:
       - name: clone code
         uses: actions/checkout@v2
@@ -43,7 +43,8 @@ jobs:
           username: ${{ secrets.NAME_SKYPRO }}
           password: ${{ secrets.SKYPRO_PASSWORD }}
           source: "todolist/docker-compose.yaml"
-          target: todolist_app
+          target: todolist
+          strip_components: 1
 
       - name: run docker-compose
         uses: appleboy/ssh-action@master
@@ -52,5 +53,5 @@ jobs:
           username: ${{ secrets.NAME_SKYPRO }}
           password: ${{ secrets.SKYPRO_PASSWORD }}
           script: |
-            cd todolist_app/todolist
+            cd todolist
             echo ${{ secrets.SKYPRO_PASSWORD }} | sudo -S docker-compose up -d
