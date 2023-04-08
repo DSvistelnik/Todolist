@@ -4,9 +4,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      POSTGRES_NAME: ${{ secrets.POSTGRES_NAME }}
-      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      POSTGRES_NAME: ${{secrets.POSTGRES_NAME}}
+      POSTGRES_PASSWORD: ${{secrets.POSTGRES_PASSWORD}}
+      POSTGRES_USER: ${{secrets.POSTGRES_USER}}
     steps:
       - uses: actions/checkout@v3
       - uses: docker/login-action@v2
@@ -22,13 +22,14 @@ jobs:
           push: true
           tags: dsvistelnik/todolist:latest
 
+
   deploy:
     runs-on: ubuntu-latest
     needs: build
     env:
-      DB_USER: ${{ secrets.DB_USER }}
-      DB_PASSWORD: ${{ secrets.DB_USER }}
-      DB_NAME: ${{ secrets.DB_USER }}
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: postgres
     steps:
       - name: clone code
         uses: actions/checkout@v2
@@ -42,8 +43,8 @@ jobs:
           username: ${{ secrets.NAME_SKYPRO }}
           password: ${{ secrets.SKYPRO_PASSWORD }}
           source: "todolist/docker-compose.yaml"
-          target: todolist
-          strip_components: 1
+          target: todolist_app
+
       - name: run docker-compose
         uses: appleboy/ssh-action@master
         with:
