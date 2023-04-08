@@ -13,7 +13,7 @@ services:
     depends_on:
       migrations:
         condition: service_completed_successfully
-    #env_file: .env
+    env_file: .env
 
   migrations:
     image: dsvistelnik/todolist:$GITHUB_REF_NAME-$GITHUB_RUN_ID
@@ -21,7 +21,7 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    #env_file: .env
+    env_file: .env
 
   db:
     image: postgres:latest
