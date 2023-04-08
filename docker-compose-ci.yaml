@@ -7,7 +7,7 @@ services:
     ports:
       - '80:80'
   api:
-    image: dsvistelnik/todolist:$GITHUB_REF_NAME-$GITHUB_RUN_ID
+    image: dsvistelnik/todolist
     ports:
       - '80:80'
     depends_on:
@@ -16,7 +16,7 @@ services:
     env_file: .env
 
   migrations:
-    image: dsvistelnik/todolist:$GITHUB_REF_NAME-$GITHUB_RUN_ID
+    image: dsvistelnik/todolist
     command: flask db upgrade
     depends_on:
       db:
