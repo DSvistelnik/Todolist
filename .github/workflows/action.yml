@@ -20,7 +20,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: skypro/todolist:latest
+          tags: dsvistelnik/todolist:latest
 
 
   deploy:
