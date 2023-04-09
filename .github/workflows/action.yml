@@ -42,7 +42,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.NAME_SKYPRO }}
           password: ${{ secrets.SKYPRO_PASSWORD }}
-          source: "skypro/todolist/docker-compose.yaml"
+          source: "todolist/docker-compose.yaml"
           target: todolist
           strip_components: 1
 
