@@ -1,13 +1,13 @@
 version: "3.8"
 services:
   front:
-    image: dsvistelnik/todolist:$GITHUB_REF_NAME-$GITHUB_RUN_ID
+    image: skypro/todolist:$GITHUB_REF_NAME-$GITHUB_RUN_ID
     depends_on:
       - api
     ports:
       - '80:80'
   api:
-    image: dsvistelnik/todolist:$GITHUB_REF_NAME-$GITHUB_RUN_ID
+    image: skypro/todolist:$GITHUB_REF_NAME-$GITHUB_RUN_ID
     ports:
       - '80:80'
     depends_on:
@@ -16,7 +16,7 @@ services:
     env_file: .env
 
   migrations:
-    image: dsvistelnik/todolist:$GITHUB_REF_NAME-$GITHUB_RUN_ID
+    image: skypro/todolist:$GITHUB_REF_NAME-$GITHUB_RUN_ID
     command: flask db upgrade
     depends_on:
       db:
