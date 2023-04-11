@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   front:
+    image: sermalenk/skypro-front:lesson-34
     build:
       context: .
     depends_on:
