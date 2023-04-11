@@ -17,7 +17,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
             push: true
-            tags: ${{ secrets.DOCKERHUB_USERNAME }}/skypro/todolist:latest
+            tags: ${{ secrets.DOCKERHUB_USERNAME }}/todolist:latest
 
 
   deploy:
