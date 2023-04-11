@@ -48,4 +48,13 @@ jobs:
             cd todolist
             docker-compose pull
             docker-compose up -d
+
+      - name: clean
+        if: always()
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.NAME_SKYPRO }}
+          password: ${{ secrets.SKYPRO_PASSWORD }}
+          script: docker system prune -a -f
             
