@@ -24,29 +24,21 @@ jobs:
 
 
   deploy:
-    runs-on: ubuntu-latest
     needs: build
-    env:
-      DB_USER: ${{ secrets.DB_USER }}
-      DB_PASSWORD: ${{ secrets.DB_USER }}
-      DB_NAME: ${{ secrets.DB_USER }}
+    runs-on: ubuntu-latest
     steps:
-      - name: clone code
-        uses: actions/checkout@v2
-      - name: render docker-compose
-        run: |
-          cat docker-compose-ci.yaml | envsubst > todolist/docker-compose.yaml
-      - name: copy docker-compose.yaml to server
+      - uses: actions/checkout@v3
+      - name: clone files to server
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.NAME_SKYPRO }}
           password: ${{ secrets.SKYPRO_PASSWORD }}
-          source: "todolist/docker-compose.yaml"
-          target: todolist
+          source: "todolist/*"
+          target: "todolist"
           strip_components: 1
 
-      - name: run docker-compose
+      - name: run compose
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
@@ -54,4 +46,6 @@ jobs:
           password: ${{ secrets.SKYPRO_PASSWORD }}
           script: |
             cd todolist
-            echo ${{ secrets.SKYPRO_PASSWORD }} | sudo -S docker-compose up -d
+            docker-compose pull
+            docker-compose up -d
+            
