@@ -1,15 +1,19 @@
 version: '3.8'
 
 services:
-  front:
-    build:
-      context: .
-    depends_on:
-      - api
-    ports:
-      - '80:80'
+ db:
+   image: postgres:14.1-alpine
+   volumes:
+    - pg_data:/var/lib/postgresql/data
+   healthcheck:
+    test: pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}
+    interval: 3s
+    timeout: 3s
+    retries: 5
+   ports:
+    - "5432:5432"
 
-  api:
+ api:
     build:
       context: .
     expose:
@@ -18,7 +22,19 @@ services:
       migrations:
         condition: service_completed_successfully
 
-  migrations:
+
+ front:
+   image: sermalenk/skypro-front:lesson-34
+   build:
+      context: .
+   depends_on:
+      api:
+        condition: service_started
+   ports:
+      - '80:80'
+
+
+ migrations:
     build:
       context: .
     command: flask db upgrade
@@ -26,17 +42,7 @@ services:
       db:
         condition: service_healthy
 
-  db:
-    image: postgres:14.1-alpine
-    volumes:
-      - pg_data:/var/lib/postgresql/data
-    healthcheck:
-      test: pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}
-      interval: 3s
-      timeout: 3s
-      retries: 5
-    ports:
-      - "5432:5432"
+
 
 volumes:
    pg_data:
