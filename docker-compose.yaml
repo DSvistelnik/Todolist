@@ -4,8 +4,14 @@ services:
  db:
    image: postgres:14.1-alpine
    restart: always
+   environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
    volumes:
     - pg_data:/var/lib/postgresql/data
+   ports:
+      - "5432:5432"
    healthcheck:
     test: pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}
     interval: 3s
@@ -15,24 +21,32 @@ services:
 
  api:
 
-    build:
-      context: .
-    expose:
-      - 8000
+    build: .
+    env_file: .env
+    environment:
+      POSTGRES_HOST: db
     depends_on:
       db:
         condition: service_healthy
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./core:/opt/core
+      - ./todolist:/opt/todolist
+      - django_static:/opt/static/
 
 
 
  front:
    image: sermalenk/skypro-front:lesson-34
    ports:
-     - "80:80"
+      - "80:80"
    depends_on:
       api:
         condition: service_started
-
+   volumes:
+        - django_static:/usr/share/nginx/html/static
 
 volumes:
    pg_data:
+   django_static:
