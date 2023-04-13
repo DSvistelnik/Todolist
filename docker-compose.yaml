@@ -45,7 +45,7 @@ services:
       api:
         condition: service_started
    volumes:
-        - django_static:/usr/share/nginx/html/static
+        - django_static://opt/static/
 
 volumes:
    pg_data:
