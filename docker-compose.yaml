@@ -21,7 +21,6 @@ services:
 
 
  api:
-
     build: .
     env_file: .env
     environment:
@@ -34,7 +33,7 @@ services:
     volumes:
       - ./core:/opt/core
       - ./todolist:/opt/todolist
-      - django_static:/opt/static/
+
 
 
 
@@ -45,9 +44,7 @@ services:
    depends_on:
       api:
         condition: service_started
-   volumes:
-        - django_static://opt/static/
+
 
 volumes:
    pg_data:
-   django_static:
