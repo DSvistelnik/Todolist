@@ -18,7 +18,7 @@ services:
       - ./pg_data:/var/lib/postgresql/data
 
  api:
-    image: dsvistelnik/todolist:$GITHUB_REF_NAME-$GITHUB_RUN_ID
+    image: dsvistelnik/todolist
     ports:
       - '80:80'
     depends_on:
