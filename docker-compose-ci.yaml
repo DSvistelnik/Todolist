@@ -7,7 +7,7 @@ services:
     env_file: .env
     restart: always
     healthcheck:
-      test: [ 'CMD-SHELL', 'pg_isready --username=$POSTGRES_USER -d $POSTGRES_NAME' ]
+      test: [ 'CMD-SHELL', 'pg_isready --username=postgres -d postgres' ]
       interval: 5s
       timeout: 5s
       retries: 5
