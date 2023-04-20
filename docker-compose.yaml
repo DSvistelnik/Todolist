@@ -21,16 +21,15 @@ services:
 
 
  api:
-    build: .
-    env_file: .env
-    environment:
-      POSTGRES_HOST: db
-    depends_on:
-      db:
-        condition: service_healthy
-    ports:
+   image: dsvistelnik/todolist:master-4743733793
+   restart: always
+   depends_on:
+     db:
+       condition: service_healthy
+   env_file: .env
+   ports:
       - "8000:8000"
-    volumes:
+   volumes:
       - ./core:/opt/core
       - ./todolist:/opt/todolist
 
