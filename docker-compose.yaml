@@ -21,12 +21,11 @@ services:
 
 
  api:
-   image: dsvistelnik/todolist:master-4743733793
-   restart: always
+   build: .
+   env_file: .env
    depends_on:
      db:
        condition: service_healthy
-   env_file: .env
    ports:
       - "8000:8000"
    volumes:
