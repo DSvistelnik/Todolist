@@ -8,3 +8,4 @@ gunicorn==20.1.0
 psycopg2-binary
 social-auth-app-django
 social-auth-core
+django-filter

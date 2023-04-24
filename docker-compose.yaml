@@ -36,7 +36,7 @@ services:
       - ./todolist:/opt/todolist
 
  front:
-   image: sermalenk/skypro-front:lesson-34
+   image: sermalenk/skypro-front:lesson-36
    ports:
       - "80:80"
    depends_on:
