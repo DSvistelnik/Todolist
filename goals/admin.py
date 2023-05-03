@@ -1,21 +1,34 @@
 from django.contrib import admin
-from goals.models import GoalCategory, Goal, GoalComment
+from goals.models import GoalCategory, Goal, GoalComment, Board
 
 
-@admin.register(GoalCategory)
 class GoalCategoryAdmin(admin.ModelAdmin):
+    list_display = ("title", "user", "created", "updated")
+    search_fields = ("title", "user")
+
+
+admin.site.register(GoalCategory, GoalCategoryAdmin)
+
+
+class GoalAdmin(admin.ModelAdmin):
     list_display = ('title', 'user', 'created', 'updated')
-    search_fields = ('title',)
-    list_filter = ('is_deleted',)
+    search_fields = ('title', 'description')
 
 
-@admin.register(Goal)
-class GoalCategoryAdmin(admin.ModelAdmin):
-    list_display = ('title', 'user', 'category', 'due_date', 'status')
-    search_fields = ('title', 'user')
+admin.site.register(Goal, GoalAdmin)
 
 
-@admin.register(GoalComment)
-class GoalCategoryAdmin(admin.ModelAdmin):
-    list_display = ('text', 'user', 'goal', 'created', 'updated')
-    search_fields = ('text', 'user')
+class GoalCommentAdmin(admin.ModelAdmin):
+    list_display = ('user', 'text',)
+    readonly_fields = ('created', 'updated',)
+
+
+admin.site.register(GoalComment, GoalCommentAdmin)
+
+
+class BoardAdmin(admin.ModelAdmin):
+    list_display = ('title', 'is_deleted')
+    readonly_fields = ('created', 'updated', )
+
+
+admin.site.register(Board, BoardAdmin)
