@@ -91,7 +91,7 @@ DATABASES = {
         'USER': env.str('POSTGRES_USER'),
         'PASSWORD': env.str('POSTGRES_PASSWORD'),
         'HOST': env.str('POSTGRES_HOST', default='127.0.0.1'),
-        'PORT': env.str('POSTGRES_PORT', default='5433'),
+        'PORT': env.str('POSTGRES_PORT', default='5432'),
     }
 }
 
@@ -147,7 +147,6 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination'
+REST_FRAMEWORK = {'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination'}
 
-}
+BOT_TOKEN = env.str('BOT_TOKEN')
