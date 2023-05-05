@@ -82,6 +82,7 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'todolist.wsgi.application'
 
 DATABASES = {

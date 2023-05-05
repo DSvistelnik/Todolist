@@ -68,7 +68,6 @@ class GoalCategory(BaseModel):
     def __str__(self):
         return self.title
 
-
 class Goal(models.Model):
     class Meta:
         verbose_name = 'Цель'
