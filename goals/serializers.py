@@ -49,7 +49,6 @@ class BoardSerializer(serializers.ModelSerializer):
             if title := validated_data.get('title'):
                 instance.title = title
 
-            instance.save()
 
         return instance
 
