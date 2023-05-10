@@ -2,7 +2,9 @@ from django.db import models
 from django.utils import timezone
 from core.models import User
 
+
 class BaseModel(models.Model):
+    """Базовая модель"""
     created = models.DateTimeField(verbose_name="Дата создания")
     updated = models.DateTimeField(verbose_name="Дата последнего обновления")
 
@@ -17,6 +19,7 @@ class BaseModel(models.Model):
 
 
 class Board(BaseModel):
+    """Модель доски"""
     class Meta:
         verbose_name = "Доска"
         verbose_name_plural = "Доски"
@@ -26,6 +29,7 @@ class Board(BaseModel):
 
 
 class BoardParticipant(Board):
+    """Доски для пользователей"""
     class Meta:
         unique_together = ("board", "user")
         verbose_name = "Участник"
@@ -54,6 +58,7 @@ class BoardParticipant(Board):
 
 
 class GoalCategory(BaseModel):
+    """Модель категории"""
     class Meta:
         verbose_name = "Категория"
         verbose_name_plural = "Категории"
@@ -68,7 +73,8 @@ class GoalCategory(BaseModel):
     def __str__(self):
         return self.title
 
-class Goal(models.Model):
+
+class Goal(BaseModel):
     class Meta:
         verbose_name = 'Цель'
         verbose_name_plural = 'Цели'

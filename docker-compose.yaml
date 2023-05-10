@@ -34,7 +34,8 @@ services:
    volumes:
 
       - ./todolist:/opt/todolist
-
+      #- ./goals:/opt/goals
+      #- ./core:/opt/core
  front:
    image: sermalenk/skypro-front:lesson-37
    ports:

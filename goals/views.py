@@ -6,18 +6,20 @@ from rest_framework import permissions
 from rest_framework.pagination import LimitOffsetPagination
 from goals.filters import GoalDateFilter
 from goals.models import GoalCategory, Goal, GoalComment, BoardParticipant, Board
-from goals.permissions import BoardPermissions
 from goals.serializers import GoalCreateSerializer, GoalCategoryCreateSerializer, GoalCategoryListSerializer, \
     GoalSerializer, GoalCommentCreateSerializer, GoalCommentSerializer, BoardSerializer, \
     BoardCreateSerializer, BoardListSerializer
 from rest_framework.filters import OrderingFilter
 
+
 class GoalCategoryCreateView(generics.CreateAPIView):
+    """ Создание категории"""
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = GoalCategoryCreateSerializer
 
 
 class GoalCategoryListView(generics.ListAPIView):
+    """Показ всех категорий"""
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = GoalCategoryListSerializer
     pagination_class = LimitOffsetPagination
@@ -33,6 +35,7 @@ class GoalCategoryListView(generics.ListAPIView):
 
 
 class GoalCategoryView(generics.RetrieveUpdateDestroyAPIView):
+    """Изменение и удаление категорий"""
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = GoalCategoryListSerializer
 
@@ -49,11 +52,13 @@ class GoalCategoryView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class GoalCreateView(generics.CreateAPIView):
+    """Создание целей"""
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = GoalCreateSerializer
 
 
 class GoalListView(generics.ListAPIView):
+    """Отображение целей"""
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = GoalSerializer
     pagination_class = LimitOffsetPagination
@@ -76,6 +81,7 @@ class GoalListView(generics.ListAPIView):
 
 
 class GoalView(generics.RetrieveUpdateDestroyAPIView):
+    """Работа с целью"""
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = GoalSerializer
 
@@ -92,11 +98,13 @@ class GoalView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class GoalCommentCreateView(generics.CreateAPIView):
+    """Создание комментариев"""
     serializer_class = GoalCommentCreateSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 
 class GoalCommentListView(generics.ListAPIView):
+    """Отображение всех комментариев"""
     serializer_class = GoalCommentSerializer
     permission_classes = [permissions.IsAuthenticated]
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
@@ -113,6 +121,7 @@ class GoalCommentListView(generics.ListAPIView):
 
 
 class GoalCommentView(generics.RetrieveUpdateDestroyAPIView):
+    """Работа с комментариями"""
     serializer_class = GoalCommentSerializer
     permission_classes = [permissions.IsAuthenticated]
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
@@ -129,6 +138,7 @@ class GoalCommentView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class BoardCreatedView(generics.CreateAPIView):
+    """Создание досок"""
     serializer_class = BoardCreateSerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -137,6 +147,7 @@ class BoardCreatedView(generics.CreateAPIView):
 
 
 class BoardListView(generics.ListAPIView):
+    """Отображение всех досок"""
     serializer_class = BoardListSerializer
     permission_classes = [permissions.IsAuthenticated]
     filter_backends = [OrderingFilter]
@@ -147,7 +158,8 @@ class BoardListView(generics.ListAPIView):
 
 
 class BoardView(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [BoardPermissions]
+    """Работа с доской"""
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = BoardSerializer
 
     def get_queryset(self):

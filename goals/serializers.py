@@ -10,6 +10,7 @@ from goals.models import GoalCategory, Goal, GoalComment, Board, BoardParticipan
 
 
 class BoardCreateSerializer(serializers.ModelSerializer):
+    """ Создание доски"""
     class Meta:
         model = Board
         fields = '__all__'
@@ -17,6 +18,7 @@ class BoardCreateSerializer(serializers.ModelSerializer):
 
 
 class BoardParticipantsSerializer(serializers.ModelSerializer):
+    """Доска для пользователей"""
     role = serializers.ChoiceField(required=True, choices=BoardParticipant.Role.choices[1:])
     user = serializers.SlugRelatedField(slug_field='username', queryset=User.objects.all())
 
@@ -27,6 +29,7 @@ class BoardParticipantsSerializer(serializers.ModelSerializer):
 
 
 class BoardSerializer(serializers.ModelSerializer):
+    """ Работа с доской """
     participants = BoardParticipantsSerializer(many=True)
 
     class Meta:
@@ -48,17 +51,19 @@ class BoardSerializer(serializers.ModelSerializer):
 
             if title := validated_data.get('title'):
                 instance.title = title
-
+            instance.save()
 
         return instance
 
 
 class BoardListSerializer(serializers.ModelSerializer):
+    """Отображение всех досок"""
     class Meta:
         model = Board
         fields = '__all__'
 
 class GoalCategoryCreateSerializer(serializers.ModelSerializer):
+    """Создание категории"""
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
@@ -68,10 +73,17 @@ class GoalCategoryCreateSerializer(serializers.ModelSerializer):
 
 
 class GoalCategoryListSerializer(GoalCategoryCreateSerializer):
+    """Сериалайзер для категории"""
     user = ProfileSerializer(read_only=True)
+
+    class Meta:
+        model = GoalCategory
+        read_only_fields = ("id", "created", "updated", "user", "is_deleted")
+        fields = "__all__"
 
 
 class GoalCreateSerializer(serializers.ModelSerializer):
+    """Создание цели"""
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
@@ -100,10 +112,12 @@ class GoalCreateSerializer(serializers.ModelSerializer):
 
 
 class GoalSerializer(GoalCreateSerializer):
+    """Сериалайзер для цели"""
     user = ProfileSerializer(read_only=True)
 
 
 class GoalCommentCreateSerializer(serializers.ModelSerializer):
+    """Создание комментариев"""
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
@@ -121,6 +135,8 @@ class GoalCommentCreateSerializer(serializers.ModelSerializer):
 
 
 class GoalCommentSerializer(GoalCommentCreateSerializer):
+    """Сериалайзер для комментариев"""
     user = ProfileSerializer(read_only=True)
     goal = serializers.PrimaryKeyRelatedField(read_only=True)
+
 

@@ -2,7 +2,7 @@ from django.urls import path
 from goals import views
 
 urlpatterns = [
-    #Доски BoardListView
+    #Доски
     path('board/create', views.BoardCreatedView.as_view(), name='create-board'),
     path('board/list', views.BoardListView.as_view(), name='board-list'),
     path('board/<int:pk>', views.BoardView.as_view(), name='board'),
