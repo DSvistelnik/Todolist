@@ -41,17 +41,13 @@ class BoardSerializer(serializers.ModelSerializer):
         request: Request = self.context['request']
         with transaction.atomic():
             BoardParticipant.objects.filter(board=instance).exclude(user=request.user).delete()
-            BoardParticipant.objects.bulk_create(
-                [
-                    BoardParticipant(user=participant['user'], role=participant['role'], board=instance)
-                    for participant in validated_data.get('participants', [])
-                ],
-                ignore_conflicts=True
-            )
+
+            for participant in validated_data.get('participants', []):
+                BoardParticipant.objects.create(user=participant['user'], role=participant['role'], board=instance)
 
             if title := validated_data.get('title'):
                 instance.title = title
-            instance.save()
+                instance.save()
 
         return instance
 
