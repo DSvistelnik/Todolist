@@ -11,3 +11,4 @@ social-auth-core
 django-filter
 pydantic
 requests
+django-request-logging

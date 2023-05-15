@@ -1,5 +1,4 @@
 from datetime import datetime
-from rest_framework.request import Request
 from django.utils import timezone
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError, PermissionDenied
@@ -19,13 +18,25 @@ class BoardCreateSerializer(serializers.ModelSerializer):
 
 class BoardParticipantsSerializer(serializers.ModelSerializer):
     """Доска для пользователей"""
-    role = serializers.ChoiceField(required=True, choices=BoardParticipant.Role.choices[1:])
-    user = serializers.SlugRelatedField(slug_field='username', queryset=User.objects.all())
+    role = serializers.ChoiceField(required=True, choices=BoardParticipant.editable_roles)
+
+    user = serializers.SlugRelatedField(
+        slug_field="username", queryset=User.objects.all()
+    )
+
+    board = serializers.PrimaryKeyRelatedField(
+        read_only=True,
+    )
 
     class Meta:
         model = BoardParticipant
-        fields = '__all__'
-        read_only_fields = ('id', 'created', 'updated', 'board')
+        fields = "__all__"
+        real_only_fields = (
+            "id",
+            "created",
+            "updated",
+            "board",
+        )
 
 
 class BoardSerializer(serializers.ModelSerializer):
@@ -34,20 +45,41 @@ class BoardSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Board
-        fields = '__all__'
-        read_only_fields = ('id', 'created', 'updated', 'is_deleted')
+        fields = "__all__"
+        read_only_fields = (
+            "id",
+            "created",
+            "updated",
+        )
 
-    def update(self, instance: Board, validated_data: dict) -> Board:
-        request: Request = self.context['request']
+    def update(self, instance: Board, validated_data) -> Board:
+        user = self.context.get("request").user
+        new_participants = {
+            participant["user"].id: participant
+            for participant in validated_data.pop("participants")
+            if participant["user"] != user
+        }
+
+        old_participants = instance.participants.exclude(user=user)
+
         with transaction.atomic():
-            BoardParticipant.objects.filter(board=instance).exclude(user=request.user).delete()
+            for old_participant in old_participants:
+                if old_participant.user.id not in new_participants:
+                    old_participant.delete()
 
-            for participant in validated_data.get('participants', []):
-                BoardParticipant.objects.create(user=participant['user'], role=participant['role'], board=instance)
+                else:
+                    new_role = new_participants[old_participant.user.id]["role"]
+                    if old_participant.role != new_role:
+                        old_participant.role = new_role
+                        old_participant.save()
+                    del new_participants[old_participant.user.id]
 
-            if title := validated_data.get('title'):
-                instance.title = title
-                instance.save()
+            [
+                BoardParticipant.objects.create(board=instance, **data)
+                for data in new_participants.values()
+            ]
+            instance.title = validated_data.get("title")
+            instance.save()
 
         return instance
 

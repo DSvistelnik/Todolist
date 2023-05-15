@@ -5,22 +5,40 @@ from core.models import User
 
 class BaseModel(models.Model):
     """Базовая модель"""
-    created = models.DateTimeField(verbose_name="Дата создания")
-    updated = models.DateTimeField(verbose_name="Дата последнего обновления")
+    created = models.DateField(
+        verbose_name="Дата создания",
+        null=True,
+        blank=True,
+    )
 
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.created = timezone.now()
-        self.updated = timezone.now()
-        return super().save(*args, **kwargs)
+    updated = models.DateField(
+        verbose_name="Дата последнего обновления",
+        null=True,
+        blank=True,
+    )
 
     class Meta:
         abstract = True
 
+    def save(self, *args, **kwargs):
+
+        if not self.id:
+            self.created = timezone.now().date()
+        self.updated = timezone.now().date()
+
+        return super().save(*args, **kwargs)
+
 
 class Board(BaseModel):
-    title = models.CharField(max_length=255)
+    title = models.CharField(verbose_name='Название', max_length=255)
     is_deleted = models.BooleanField(verbose_name="Удалена", default=False)
+
+    class Meta:
+        verbose_name = "Доска"
+        verbose_name_plural = "Доски"
+
+    def __str__(self):
+        return self.title
 
 
 class BoardParticipant(Board):
@@ -50,7 +68,10 @@ class BoardParticipant(Board):
     role = models.PositiveSmallIntegerField(
         verbose_name="Роль", choices=Role.choices, default=Role.owner
     )
-    editable_choices = Role.choices[1:]
+    editable_roles = Role.choices[1:]
+
+    def __str__(self):
+        return self.role
 
 
 class GoalCategory(BaseModel):
