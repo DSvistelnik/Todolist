@@ -10,18 +10,15 @@ class BaseModel(models.Model):
         null=True,
         blank=True,
     )
-
     updated = models.DateField(
         verbose_name="Дата последнего обновления",
         null=True,
         blank=True,
     )
-
     class Meta:
         abstract = True
 
     def save(self, *args, **kwargs):
-
         if not self.id:
             self.created = timezone.now().date()
         self.updated = timezone.now().date()
@@ -30,7 +27,7 @@ class BaseModel(models.Model):
 
 
 class Board(BaseModel):
-    title = models.CharField(verbose_name='Название', max_length=255)
+    title = models.CharField(verbose_name='Название', max_length=255, blank=True)
     is_deleted = models.BooleanField(verbose_name="Удалена", default=False)
 
     class Meta:
