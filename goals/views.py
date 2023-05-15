@@ -6,6 +6,7 @@ from rest_framework import permissions
 from rest_framework.pagination import LimitOffsetPagination
 from goals.filters import GoalDateFilter
 from goals.models import GoalCategory, Goal, GoalComment, BoardParticipant, Board
+from goals.permissions import BoardPermissions
 from goals.serializers import GoalCreateSerializer, GoalCategoryCreateSerializer, GoalCategoryListSerializer, \
     GoalSerializer, GoalCommentCreateSerializer, GoalCommentSerializer, BoardSerializer, \
     BoardCreateSerializer, BoardListSerializer
@@ -159,7 +160,7 @@ class BoardListView(generics.ListAPIView):
 
 class BoardView(generics.RetrieveUpdateDestroyAPIView):
     """Работа с доской"""
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, BoardPermissions]
     serializer_class = BoardSerializer
 
     def get_queryset(self):

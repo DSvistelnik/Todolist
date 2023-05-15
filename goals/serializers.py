@@ -58,6 +58,7 @@ class BoardListSerializer(serializers.ModelSerializer):
         model = Board
         fields = '__all__'
 
+
 class GoalCategoryCreateSerializer(serializers.ModelSerializer):
     """Создание категории"""
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())

@@ -19,12 +19,7 @@ class BaseModel(models.Model):
 
 
 class Board(BaseModel):
-    """Модель доски"""
-    class Meta:
-        verbose_name = "Доска"
-        verbose_name_plural = "Доски"
-
-    title = models.CharField(verbose_name="Название", max_length=255)
+    title = models.CharField(max_length=255)
     is_deleted = models.BooleanField(verbose_name="Удалена", default=False)
 
 
@@ -55,6 +50,7 @@ class BoardParticipant(Board):
     role = models.PositiveSmallIntegerField(
         verbose_name="Роль", choices=Role.choices, default=Role.owner
     )
+    editable_choices = Role.choices[1:]
 
 
 class GoalCategory(BaseModel):
