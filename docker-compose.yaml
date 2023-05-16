@@ -31,7 +31,6 @@ services:
    ports:
       - "8000:8000"
    volumes:
-
       - ./todolist:/code/todolist
       #- ./goals:/opt/goals
       #- ./core:/opt/core
