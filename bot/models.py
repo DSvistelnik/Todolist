@@ -1,4 +1,3 @@
-import os
 from django.db import models
 from core.models import User
 from django.utils.crypto import get_random_string

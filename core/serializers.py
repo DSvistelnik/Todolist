@@ -12,6 +12,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
+    """ Создаем сериалайзер пользователя"""
     password = PasswordField(required=True, write_only=False)
     password_repeat = PasswordField(required=True)
 
@@ -28,6 +29,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(required=True)
     password = PasswordField(required=True)
+
 
 class UpdatePasswordSerializer(serializers.Serializer):
     old_password = PasswordField(required=True)
