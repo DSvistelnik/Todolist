@@ -94,7 +94,7 @@ class Command(BaseCommand):
 
         self.tg_client.send_message(
             chat_id=message.chat.id,
-            text=f'Your verification code is {tg_user.verification_code}',
+            text=f'Твой верификационный код {tg_user.verification_code}',
         )
 
     def _get_goals(self, message: Message, tg_user: TgUser) -> SendMessageResponse:

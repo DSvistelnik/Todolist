@@ -37,7 +37,7 @@ services:
       #- ./goals:/opt/goals
       #- ./core:/opt/core
  front:
-   image: sermalenk/skypro-front:lesson-37
+   image: sermalenk/skypro-front:lesson-38
    ports:
       - "80:80"
    depends_on:
