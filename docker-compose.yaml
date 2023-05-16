@@ -30,8 +30,8 @@ services:
        condition: service_healthy
    ports:
       - "8000:8000"
-   #volumes:
-      #- ./todolist:/opt/todolist
+   volumes:
+      - ./todolist:/opt/todolist
       #- ./goals:/opt/goals
       #- ./core:/opt/core
 

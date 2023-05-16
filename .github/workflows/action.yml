@@ -38,7 +38,7 @@ jobs:
           username: ${{ secrets.NAME_SKYPRO }}
           password: ${{ secrets.SKYPRO_PASSWORD }}
           source: "todolist/docker-compose.yaml"
-          target: todolist
+          target: "todolist"
           strip_components: 1
 
       - name: run docker-compose
