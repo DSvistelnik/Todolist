@@ -24,7 +24,7 @@ services:
     env_file: .env
 
  bot:
-   image: dsvistelnik/todolist
+   image: dsvistelnik/todolist:master-5016777012
    restart: always
    env_file: .env
    depends_on:
