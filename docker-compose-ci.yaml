@@ -24,7 +24,7 @@ services:
     env_file: .env
 
  bot:
-   image: dsvistelnik/todolist:$GITHUB_REF_NAME-$GITHUB_RUN_ID
+   image: dsvistelnik/todolist
    restart: always
    env_file: .env
    depends_on:
