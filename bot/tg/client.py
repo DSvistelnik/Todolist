@@ -40,3 +40,5 @@ class TgClient:
             print(f'Failed to serialize response: {data}')
             return GetUpdatesResponse(ok=False, result=[])
 
+
+
