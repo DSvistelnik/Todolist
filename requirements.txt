@@ -12,3 +12,5 @@ django-filter
 pydantic
 requests
 django-request-logging
+pytest-django
+pytest-factoryboy
