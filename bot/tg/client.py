@@ -34,11 +34,7 @@ class TgClient:
             self.get_url('sendMessage'), params={'chat_id': chat_id, 'text': text}
         )
         data = response.json()
-        try:
-            return GetUpdatesResponse(**data)
-        except ValidationError:
-            print(f'Failed to serialize response: {data}')
-            return GetUpdatesResponse(ok=False, result=[])
+        return SendMessageResponse(**data)
 
 
 
