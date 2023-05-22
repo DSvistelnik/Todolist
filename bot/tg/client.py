@@ -1,4 +1,6 @@
 from django.conf import settings
+from pydantic import ValidationError
+
 from bot.tg.dc import GetUpdatesResponse, SendMessageResponse
 from requests import Response
 import requests
@@ -20,7 +22,11 @@ class TgClient:
             self.get_url('getUpdates'), params={'offset': offset, 'timeout': timeout}
         )
         data = response.json()
-        return GetUpdatesResponse(**data)
+        try:
+            return GetUpdatesResponse(**data)
+        except ValidationError:
+            print(f'Failed to serialize response: {data}')
+            return GetUpdatesResponse(ok=False, result=[])
 
     def send_message(self, chat_id: int, text: str) -> SendMessageResponse:
         """Отправить сообщение телеграмм-боту"""
@@ -28,5 +34,9 @@ class TgClient:
             self.get_url('sendMessage'), params={'chat_id': chat_id, 'text': text}
         )
         data = response.json()
-        return SendMessageResponse(**data)
+        try:
+            return GetUpdatesResponse(**data)
+        except ValidationError:
+            print(f'Failed to serialize response: {data}')
+            return GetUpdatesResponse(ok=False, result=[])
 
